@@ -30,6 +30,13 @@ export class ClientesService {
     });
   }
 
+  async findOneClienteById(id: number): Promise<ClienteRetornoDto> {
+    const clientelocalizado = await this.clientesRepository.findOneBy({ id });
+    return plainToInstance(ClienteRetornoDto, clientelocalizado, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   async createCliente(
     clienteCriarDto: ClienteCriarDto,
   ): Promise<ClienteRetornoDto> {

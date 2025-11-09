@@ -4,6 +4,9 @@ import { Expose, Transform } from 'class-transformer';
 
 export class ClienteRetornoDto {
   @Expose()
+  id: number;
+
+  @Expose()
   cpf: string;
 
   @Expose()

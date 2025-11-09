@@ -9,5 +9,6 @@ import { CpfUnico } from '../validators/cpf-unico.validator';
   imports: [TypeOrmModule.forFeature([Cliente])],
   controllers: [ClientesController],
   providers: [ClientesService, CpfUnico],
+  exports: [ClientesService],
 })
 export class ClientesModule {}

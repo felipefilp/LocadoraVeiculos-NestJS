@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Locacao } from 'src/locacoes/locacao.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Cliente {
@@ -34,4 +35,7 @@ export class Cliente {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
+
+  @OneToMany(() => Locacao, (locacao) => locacao.id_cliente)
+  locacoes: Locacao[];
 }
