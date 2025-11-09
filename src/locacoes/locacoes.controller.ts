@@ -22,6 +22,11 @@ export class LocacoesController {
     return this.locacaoService.getLocacaoById(id);
   }
 
+  @Get('BuscarTodasLocacoes')
+  async buscarTodasLocacoes(): Promise<LocacaoRetornoDto[]> {
+    return this.locacaoService.getAllLocacoes();
+  }
+
   @Get('BuscarLocacoesPorData')
   async buscarLocacaoPorData(
     @Query() query: BuscarLocacoesPorDataDto,
@@ -30,6 +35,11 @@ export class LocacoesController {
       query.data_inicio,
       query.data_fim,
     );
+  }
+
+  @Patch('ConcluirLocacao/:id')
+  async concluirLocacao(@Param('id') id: number): Promise<LocacaoRetornoDto> {
+    return this.locacaoService.concluirLocacao(id);
   }
 
   @Post('/RealizarLocacao')

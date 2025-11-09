@@ -83,6 +83,19 @@ export class LocacoesService {
     });
   }
 
+  async concluirLocacao(id: number): Promise<LocacaoRetornoDto> {
+    const Locacao = await this.LocacaoRepository.findOneBy({ id });
+    if (!Locacao) {
+      throw new NotFoundException('Locação não encontrada.');
+    }
+    Locacao.status_locacao = 2;
+    Locacao.data_fim = new Date();
+    const LocacaoSalva = await this.LocacaoRepository.save(Locacao);
+    return plainToInstance(LocacaoRetornoDto, LocacaoSalva, {
+      excludeExtraneousValues: true,
+    });
+  }
+
   async atualizarLocacao(
     id: number,
     AtualizarLocacaoDto: LocacaoAtualizarDto,
