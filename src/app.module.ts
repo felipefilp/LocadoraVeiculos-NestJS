@@ -10,6 +10,8 @@ import { LocacoesModule } from './locacoes/locacoes.module';
 import { Locacao } from './locacoes/locacao.entity';
 import { RemessasModule } from './remessas/remessas.module';
 import { Remessa } from './remessas/remessa.entity';
+import { DevolucoesModule } from './devolucoes/devolucoes.module';
+import { Devolucao } from './devolucoes/devolucao.entity';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { Remessa } from './remessas/remessa.entity';
       username: 'postgres',
       password: 'locadora@5463',
       database: 'postgres',
-      entities: [Cliente, Veiculo, Vendedor, Locacao, Remessa],
+      entities: [Cliente, Veiculo, Vendedor, Locacao, Remessa, Devolucao],
       synchronize: true,
     }),
     ClientesModule,
@@ -28,6 +30,7 @@ import { Remessa } from './remessas/remessa.entity';
     VendedorModule,
     LocacoesModule,
     RemessasModule,
+    DevolucoesModule,
   ],
   controllers: [],
   providers: [],

@@ -1,6 +1,13 @@
+import { Devolucao } from 'src/devolucoes/devolucao.entity';
 import { Locacao } from 'src/locacoes/locacao.entity';
 import { Veiculo } from 'src/veiculos/veiculo.entity';
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export class Remessa {
   @PrimaryGeneratedColumn()
@@ -25,4 +32,8 @@ export class Remessa {
   @ManyToOne(() => Veiculo)
   @JoinColumn({ name: 'id_veiculo' })
   id_veiculo: Veiculo;
+
+  @OneToOne(() => Devolucao)
+  @JoinColumn({ name: 'id_devolucao' })
+  id_devolucao: Devolucao;
 }
