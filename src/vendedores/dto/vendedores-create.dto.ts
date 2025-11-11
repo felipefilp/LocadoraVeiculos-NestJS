@@ -1,18 +1,24 @@
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
 import { IsCpfUnico } from 'src/validators/cpf-unico.validator';
 import { Vendedor } from '../vendedor.entity';
+import {
+  IsCPFUnicoMessage,
+  IsStringMessage,
+  IsUniqueMessage,
+  LengthMessage,
+} from 'src/validators/message.validator';
 
 export class VendedorCriarDto {
-  @IsNotEmpty({ message: 'O nome é obrigatório.' })
-  @IsString()
-  @Length(3, 100, { message: 'O nome deve ter entre 3 e 100 caracteres.' })
+  @IsNotEmpty({ message: IsUniqueMessage('nome') })
+  @IsString({ message: IsStringMessage('nome') })
+  @Length(3, 100, { message: LengthMessage('cpf', 3, 100) })
   nome: string;
 
-  @IsNotEmpty({ message: 'O CPF é obrigatório.' })
-  @IsString()
-  @Length(11, 11, { message: 'O CPF tem que possuir 11 digitos.' })
+  @IsNotEmpty({ message: IsUniqueMessage('cpf') })
+  @IsString({ message: IsStringMessage('cpf') })
+  @Length(11, 11, { message: LengthMessage('cpf', 11, 11) })
   @IsCpfUnico(Vendedor, {
-    message: 'Já existe um vendedor cadastrado com este CPF.',
+    message: IsCPFUnicoMessage('vendedor'),
   })
   @Matches(/^\d{11}$/, { message: 'O CPF deve conter apenas números.' })
   cpf: string;

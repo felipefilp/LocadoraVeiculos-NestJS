@@ -4,6 +4,7 @@ import { Vendedor } from './vendedor.entity';
 import { Repository } from 'typeorm';
 import { VendedorCriarDto } from './dto/vendedores-create.dto';
 import { VendedorAtualizarDto } from './dto/vendedores-atualizar.dto';
+import { NotFoundMessage } from 'src/validators/message.validator';
 
 @Injectable()
 export class VendedorService {
@@ -35,7 +36,7 @@ export class VendedorService {
   ): Promise<Vendedor> {
     const vendedorLocalizado = await this.VendedorRepository.findOneBy({ cpf });
     if (!vendedorLocalizado) {
-      throw new NotFoundException('Vendedor não localizado.');
+      throw new NotFoundException(NotFoundMessage('Vendedor'));
     }
     Object.assign(vendedorLocalizado, dados);
     return this.VendedorRepository.save(vendedorLocalizado);

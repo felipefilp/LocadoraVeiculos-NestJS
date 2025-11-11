@@ -1,9 +1,11 @@
 import { Cliente } from 'src/clientes/cliente.entity';
+import { Remessa } from 'src/remessas/remessa.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -16,7 +18,7 @@ export class Locacao {
   data_inicio: Date;
 
   @Column({ type: 'timestamp', nullable: true, default: null })
-  data_fim?: Date;
+  data_fim: Date;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   inserted_at?: Date;
@@ -33,4 +35,7 @@ export class Locacao {
   @ManyToOne(() => Cliente)
   @JoinColumn({ name: 'id_cliente' })
   id_cliente: Cliente;
+
+  @OneToMany(() => Remessa, (remessa) => remessa.id)
+  Remessas: Remessa[];
 }

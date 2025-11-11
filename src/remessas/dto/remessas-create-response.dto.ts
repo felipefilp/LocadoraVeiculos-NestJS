@@ -1,34 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Expose, Transform } from 'class-transformer';
 
-export class ClienteRetornoDto {
+export class RemessaRetornoDto {
   @Expose()
   id: number;
 
   @Expose()
-  cpf: string;
+  status_locacao: number;
 
   @Expose()
-  nome: string;
-
-  @Expose()
-  cep: string;
-
-  @Expose()
-  logradouro: string;
-
-  @Expose()
-  numero: number;
-
-  @Expose()
-  cidade: string;
-
-  @Expose()
-  siglaEstado: string;
-
-  @Expose()
-  telefone: string;
+  valor_remessa: number;
 
   @Expose()
   @Transform(({ value }) =>
@@ -41,8 +22,4 @@ export class ClienteRetornoDto {
     value ? new Date(value).toLocaleString('pt-BR', { hour12: false }) : null,
   )
   updated_at: Date;
-
-  constructor(partial: Partial<ClienteRetornoDto>) {
-    Object.assign(this, partial);
-  }
 }

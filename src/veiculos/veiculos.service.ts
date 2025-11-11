@@ -7,6 +7,7 @@ import { VeiculoRetornoDto } from './dto/veiculos-create-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { VeiculoCriarDto } from './dto/veiculos-create.dto';
 import { VeiculoAtualizarDto } from './dto/veiculos-atualizar.dto';
+import { NotFoundMessage } from 'src/validators/message.validator';
 
 @Injectable()
 export class VeiculosService {
@@ -44,7 +45,7 @@ export class VeiculosService {
   ): Promise<Veiculo> {
     const VeiculoLocalizado = await this.VeiculoRepository.findOneBy({ placa });
     if (!VeiculoLocalizado) {
-      throw new NotFoundException('Veiculo não localizado.');
+      throw new NotFoundException(NotFoundMessage('Veiculo'));
     }
     Object.assign(VeiculoLocalizado, VeiculoAtualizarDto);
     VeiculoLocalizado.updated_at = new Date();

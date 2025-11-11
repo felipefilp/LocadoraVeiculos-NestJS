@@ -14,6 +14,7 @@ import { LocacaoRetornoDto } from './dto/locacao-create-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { ClientesService } from 'src/clientes/clientes.service';
 import { LocacaoAtualizarDto } from './dto/locacao-atualizar.dto';
+import { NotFoundMessage } from 'src/validators/message.validator';
 
 @Injectable()
 export class LocacoesService {
@@ -74,7 +75,7 @@ export class LocacoesService {
       Number(RealizarLocacaoDto.id_cliente),
     );
     if (!cliente) {
-      throw new NotFoundException('Cliente não cadastrado.');
+      throw new NotFoundException(NotFoundMessage('Cliente'));
     }
     const LocacaoCriada = this.LocacaoRepository.create(RealizarLocacaoDto);
     const Locacao = await this.LocacaoRepository.save(LocacaoCriada);
@@ -86,7 +87,7 @@ export class LocacoesService {
   async concluirLocacao(id: number): Promise<LocacaoRetornoDto> {
     const Locacao = await this.LocacaoRepository.findOneBy({ id });
     if (!Locacao) {
-      throw new NotFoundException('Locação não encontrada.');
+      throw new NotFoundException(NotFoundMessage('Locação'));
     }
     Locacao.status_locacao = 2;
     Locacao.data_fim = new Date();
@@ -102,7 +103,7 @@ export class LocacoesService {
   ): Promise<LocacaoRetornoDto> {
     const LocacaoLocalizada = await this.LocacaoRepository.findOneBy({ id });
     if (!LocacaoLocalizada) {
-      throw new NotFoundException('Locação não encontrada.');
+      throw new NotFoundException(NotFoundMessage('Locação'));
     }
     Object.assign(LocacaoLocalizada, AtualizarLocacaoDto);
     const Locacao = await this.LocacaoRepository.save(LocacaoLocalizada);

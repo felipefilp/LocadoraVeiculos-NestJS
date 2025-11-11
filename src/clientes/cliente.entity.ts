@@ -31,10 +31,10 @@ export class Cliente {
   telefone: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  insertedAt: Date;
+  inserted_at: Date;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  updated_at: Date;
 
   @OneToMany(() => Locacao, (locacao) => locacao.id_cliente)
   locacoes: Locacao[];

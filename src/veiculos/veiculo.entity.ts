@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Remessa } from 'src/remessas/remessa.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Veiculo {
@@ -22,4 +23,7 @@ export class Veiculo {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
+
+  @OneToMany(() => Remessa, (remessa) => remessa.id_veiculo)
+  id_veiculo: Remessa;
 }

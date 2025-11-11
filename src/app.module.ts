@@ -8,6 +8,8 @@ import { VendedorModule } from './vendedores/vendedores.module';
 import { Vendedor } from './vendedores/vendedor.entity';
 import { LocacoesModule } from './locacoes/locacoes.module';
 import { Locacao } from './locacoes/locacao.entity';
+import { RemessasModule } from './remessas/remessas.module';
+import { Remessa } from './remessas/remessa.entity';
 
 @Module({
   imports: [
@@ -18,13 +20,14 @@ import { Locacao } from './locacoes/locacao.entity';
       username: 'postgres',
       password: 'locadora@5463',
       database: 'postgres',
-      entities: [Cliente, Veiculo, Vendedor, Locacao],
+      entities: [Cliente, Veiculo, Vendedor, Locacao, Remessa],
       synchronize: true,
     }),
     ClientesModule,
     VeiculosModule,
     VendedorModule,
     LocacoesModule,
+    RemessasModule,
   ],
   controllers: [],
   providers: [],
