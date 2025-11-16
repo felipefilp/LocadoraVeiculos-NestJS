@@ -17,8 +17,10 @@ import {
   LengthMessage,
   TelefoneMessage,
 } from 'src/validators/message.validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ClienteCriarDto {
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('cpf') })
   @IsString({ message: IsStringMessage('cpf') })
   @Length(11, 11, { message: LengthMessage('cpf', 11, 11) })
@@ -28,27 +30,33 @@ export class ClienteCriarDto {
   })
   cpf: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('nome') })
   @IsString({ message: IsStringMessage('nome') })
   @Length(3, 100, { message: LengthMessage('nome', 3, 100) })
   nome: string;
 
+  @ApiProperty()
   @IsString({ message: IsStringMessage('cep') })
   @IsPostalCode('BR', { message: 'O CEP informado não é válido.' })
   cep: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('logradouro') })
   @IsString({ message: IsStringMessage('logradouro') })
   logradouro: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('numero') })
   @IsNumber({}, { message: 'O número deve ser um valor númerico.' })
   numero: number;
 
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('cidade') })
   @IsString({ message: IsStringMessage('cidade') })
   cidade: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: IsUniqueMessage('siglaEstado') })
   @IsString({ message: IsStringMessage('siglaEstado') })
   @Length(2, 2, {
@@ -56,6 +64,7 @@ export class ClienteCriarDto {
   })
   siglaEstado: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString({
     message: IsStringMessage('telefone'),

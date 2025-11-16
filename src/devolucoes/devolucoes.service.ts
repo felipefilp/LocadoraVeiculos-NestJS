@@ -24,6 +24,9 @@ export class DevolucoesService {
     const DevolucaoLocalizada = await this.DevolucaoRepository.findOneBy({
       id,
     });
+    if (!DevolucaoLocalizada) {
+      throw new NotFoundException(NotFoundMessage('Devolução'));
+    }
     return plainToInstance(DevolucaoRetornoDto, DevolucaoLocalizada, {
       excludeExtraneousValues: true,
     });

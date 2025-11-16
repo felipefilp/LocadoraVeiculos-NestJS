@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Veiculo } from './veiculo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +16,9 @@ export class VeiculosService {
   ) {}
   async findOneVeiculoByPlaca(placa: string): Promise<VeiculoRetornoDto> {
     const VeiculoLocalizado = await this.VeiculoRepository.findOneBy({ placa });
-
+    if (!VeiculoLocalizado) {
+      throw new NotFoundException(NotFoundMessage('Veiculo'));
+    }
     return plainToInstance(VeiculoRetornoDto, VeiculoLocalizado, {
       excludeExtraneousValues: true,
     });
@@ -54,6 +55,9 @@ export class VeiculosService {
 
   async getVeiculoById(id: number): Promise<VeiculoRetornoDto> {
     const VeiculoLocalizado = await this.VeiculoRepository.findOneBy({ id });
+    if (!VeiculoLocalizado) {
+      throw new NotFoundException(NotFoundMessage('Veiculo'));
+    }
     return plainToInstance(VeiculoRetornoDto, VeiculoLocalizado, {
       excludeExtraneousValues: true,
     });

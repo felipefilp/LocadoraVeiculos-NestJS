@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cliente } from './cliente.entity';
@@ -8,6 +8,7 @@ import { ClienteCriarDto } from './dto/clientes-create.dto';
 import { plainToInstance } from 'class-transformer';
 import { ClienteRetornoDto } from './dto/clientes-create-response.dto';
 import { ClientesAtualizarDto } from './dto/clientes-atualizar.dto';
+import { NotFoundMessage } from 'src/validators/message.validator';
 
 @Injectable()
 export class ClientesService {
@@ -50,7 +51,14 @@ export class ClientesService {
   async updateCliente(
     cpf: string,
     clienteAtualizarDto: ClientesAtualizarDto,
-  ): Promise<Cliente> {
-    return this.clientesRepository.save(clienteAtualizarDto);
+  ): Promise<ClienteRetornoDto> {
+    const clienteLocalizado = await this.clientesRepository.findOneBy({ cpf });
+    if (!clienteLocalizado) {
+      throw new NotFoundException(NotFoundMessage('Cliente'));
+    }
+    const clienteSalvo = this.clientesRepository.save(clienteAtualizarDto);
+    return plainToInstance(ClienteRetornoDto, clienteSalvo, {
+      excludeExtraneousValues: true,
+    });
   }
 }
