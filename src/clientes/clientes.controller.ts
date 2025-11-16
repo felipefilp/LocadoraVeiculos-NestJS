@@ -3,8 +3,8 @@ import { ClientesService } from './clientes.service';
 import { ClienteCriarDto } from './dto/clientes-create.dto';
 import { ClienteRetornoDto } from './dto/clientes-create-response.dto';
 import { ClientesAtualizarDto } from './dto/clientes-atualizar.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+@ApiTags('Cliente')
 @Controller('clientes')
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}

@@ -5,7 +5,7 @@ import { DevolucaoCriarDto } from './dto/devolucao-create.dto';
 import { DevolucaoAtualizarDto } from './dto/devolucao-atualizar.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Devolução')
+@ApiTags('Devolucao')
 @Controller('devolucao')
 export class DevolucoesController {
   constructor(private DevolucoesService: DevolucoesService) {}

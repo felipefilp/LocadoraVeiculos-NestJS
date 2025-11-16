@@ -16,7 +16,7 @@ export class VendedorService {
   async findOneVendedorByCPF(cpf: string): Promise<Vendedor> {
     const vendedorLocalizado = await this.VendedorRepository.findOneBy({ cpf });
     if (!vendedorLocalizado) {
-      throw new NotFoundException('Vendedor não localizado.');
+      throw new NotFoundException(NotFoundMessage('Vendedor'));
     }
     return vendedorLocalizado;
   }
