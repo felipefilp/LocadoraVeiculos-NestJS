@@ -1,10 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Devolucao } from './devolucao.entity';
 import { DevolucaoRetornoDto } from './dto/devolucao-create-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Remessa } from 'src/remessas/remessa.entity';
 import { NotFoundMessage } from 'src/validators/message.validator';
 import { DevolucaoCriarDto } from './dto/devolucao-create.dto';
 import { DevolucaoAtualizarDto } from './dto/devolucao-atualizar.dto';
@@ -14,8 +18,6 @@ export class DevolucoesService {
   constructor(
     @InjectRepository(Devolucao)
     private readonly DevolucaoRepository: Repository<Devolucao>,
-    @InjectRepository(Remessa)
-    private readonly RemessaRepository: Repository<Remessa>,
   ) {}
 
   async BuscarDevolucaoById(id: number): Promise<DevolucaoRetornoDto> {
@@ -30,17 +32,21 @@ export class DevolucoesService {
   async BuscarDevolucaoByRemessaId(
     id_remessa: number,
   ): Promise<DevolucaoRetornoDto> {
-    const RemessaLocalizada = await this.RemessaRepository.findOneBy({
-      id: id_remessa,
+    const DevolucaoLocalizada = await this.DevolucaoRepository.findOne({
+      where: {
+        id_remessa: {
+          id: id_remessa,
+        },
+      },
+      relations: { id_remessa: true },
     });
-    if (!RemessaLocalizada) {
-      throw new NotFoundException(NotFoundMessage('Remessa'));
-    }
-    const DevolucaoLocalizada = await this.DevolucaoRepository.findOneBy({
-      id_remessa: RemessaLocalizada,
-    });
+
     if (!DevolucaoLocalizada) {
       throw new NotFoundException(NotFoundMessage('Devolução'));
+    }
+
+    if (!DevolucaoLocalizada.id_remessa) {
+      throw new NotFoundException(NotFoundMessage('Remessa'));
     }
 
     return plainToInstance(DevolucaoRetornoDto, DevolucaoLocalizada, {
@@ -77,11 +83,21 @@ export class DevolucoesService {
   }
 
   async ConcluirDevolucao(id: number): Promise<DevolucaoRetornoDto> {
-    const DevolucaoLocalizada = await this.DevolucaoRepository.findOneBy({
-      id,
+    const DevolucaoLocalizada = await this.DevolucaoRepository.findOne({
+      where: { id },
+      relations: { id_remessa: true },
     });
+    // Verifica se a devolução existe
     if (!DevolucaoLocalizada) {
       throw new NotFoundException(NotFoundMessage('Devolução'));
+    }
+    // Verifica se a remessa vinculada está concluida
+
+    if (DevolucaoLocalizada.id_remessa.status_locacao === 1) {
+      throw new HttpException(
+        `A remessa ${DevolucaoLocalizada.id_remessa.id} que possui vinculo com esta devolução, não está concluida.`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     DevolucaoLocalizada.status_devolucao = 2;
     DevolucaoLocalizada.data_devolucao = new Date();

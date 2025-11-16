@@ -8,5 +8,6 @@ import { Devolucao } from './devolucao.entity';
   imports: [TypeOrmModule.forFeature([Devolucao])],
   controllers: [DevolucoesController],
   providers: [DevolucoesService],
+  exports: [DevolucoesService],
 })
 export class DevolucoesModule {}

@@ -4,7 +4,7 @@ import { RemessaRetornoDto } from './dto/remessas-create-response.dto';
 import { RemessaCriarDto } from './dto/remessas-create.dto';
 import { RemessaAtualizarDto } from './dto/remessas-atualizar.dto';
 
-@Controller('remessas')
+@Controller('remessa')
 export class RemessasController {
   constructor(private readonly RemessaService: RemessasService) {}
 
@@ -20,7 +20,7 @@ export class RemessasController {
     return this.RemessaService.BuscarRemessaPorIdLocacao(id_locacao);
   }
 
-  @Post('CriarRemessa/:id')
+  @Post('CriarRemessa')
   async criarRemessa(
     @Body() RemessaCriarDto: RemessaCriarDto,
   ): Promise<RemessaRetornoDto> {

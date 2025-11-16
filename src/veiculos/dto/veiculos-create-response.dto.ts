@@ -3,6 +3,9 @@ import { Expose, Transform } from 'class-transformer';
 
 export class VeiculoRetornoDto {
   @Expose()
+  id: number;
+
+  @Expose()
   modelo: string;
 
   @Expose()

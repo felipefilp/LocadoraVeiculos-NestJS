@@ -24,7 +24,7 @@ export class Devolucao {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
-  @OneToOne(() => Remessa, (remessa) => remessa.id)
+  @OneToOne(() => Remessa, (remessa) => remessa.id_devolucao)
   @JoinColumn({ name: 'id_remessa' })
   id_remessa: Remessa;
 }

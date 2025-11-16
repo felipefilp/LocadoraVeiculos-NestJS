@@ -3,12 +3,13 @@ import { Locacao } from 'src/locacoes/locacao.entity';
 import { Veiculo } from 'src/veiculos/veiculo.entity';
 import {
   Column,
+  Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
+@Entity()
 export class Remessa {
   @PrimaryGeneratedColumn()
   id: number;
@@ -33,7 +34,7 @@ export class Remessa {
   @JoinColumn({ name: 'id_veiculo' })
   id_veiculo: Veiculo;
 
-  @OneToOne(() => Devolucao)
+  @OneToOne(() => Devolucao, (devolucao) => devolucao.id_remessa)
   @JoinColumn({ name: 'id_devolucao' })
   id_devolucao: Devolucao;
 }

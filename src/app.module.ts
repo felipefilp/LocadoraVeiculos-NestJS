@@ -12,18 +12,27 @@ import { RemessasModule } from './remessas/remessas.module';
 import { Remessa } from './remessas/remessa.entity';
 import { DevolucoesModule } from './devolucoes/devolucoes.module';
 import { Devolucao } from './devolucoes/devolucao.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'locadora@5463',
-      database: 'postgres',
-      entities: [Cliente, Veiculo, Vendedor, Locacao, Remessa, Devolucao],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: 'env/.development.env',
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get<'postgres'>('DB_TYPE'),
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        entities: [Cliente, Veiculo, Vendedor, Locacao, Remessa, Devolucao],
+        synchronize: true,
+      }),
     }),
     ClientesModule,
     VeiculosModule,

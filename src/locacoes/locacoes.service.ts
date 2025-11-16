@@ -1,7 +1,8 @@
-/* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
+  HttpException,
+  HttpStatus,
   Injectable,
   NotAcceptableException,
   NotFoundException,
@@ -15,6 +16,8 @@ import { plainToInstance } from 'class-transformer';
 import { ClientesService } from 'src/clientes/clientes.service';
 import { LocacaoAtualizarDto } from './dto/locacao-atualizar.dto';
 import { NotFoundMessage } from 'src/validators/message.validator';
+import { RemessasService } from 'src/remessas/remessas.service';
+import { DevolucoesService } from 'src/devolucoes/devolucoes.service';
 
 @Injectable()
 export class LocacoesService {
@@ -22,6 +25,8 @@ export class LocacoesService {
     @InjectRepository(Locacao)
     private LocacaoRepository: Repository<Locacao>,
     private readonly ClienteService: ClientesService,
+    private readonly RemessaService: RemessasService,
+    private readonly DevolucaoService: DevolucoesService,
   ) {}
 
   async getLocacaoById(id: number): Promise<LocacaoRetornoDto> {
@@ -85,10 +90,35 @@ export class LocacoesService {
   }
 
   async concluirLocacao(id: number): Promise<LocacaoRetornoDto> {
+    // Busca locação
     const Locacao = await this.LocacaoRepository.findOneBy({ id });
     if (!Locacao) {
+      // Se não encontrada, dá o erro
       throw new NotFoundException(NotFoundMessage('Locação'));
     }
+    // Se encontrada, busca remessas e devoluções para saber se a locação está concluida
+    const remessas = await this.RemessaService.BuscarRemessaPorIdLocacao(
+      Locacao.id,
+    );
+    for (const remessa of remessas) {
+      const devolucao = await this.DevolucaoService.BuscarDevolucaoByRemessaId(
+        remessa.id,
+      );
+      if (remessa.status_locacao === 1) {
+        throw new HttpException(
+          `A remessa ${remessa.id} que possui relação com a locação ${Locacao.id} está aberta, remova a remessa ou conclua e posteriormente faça a devolução para encerrar a locação.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      if (devolucao.status_devolucao === 1) {
+        throw new HttpException(
+          `A devolução ${devolucao.id} que possui relação com a locação ${Locacao.id} está aberta, conclua a devolução para encerrar a locação.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+
+    // Altera status para concluido (2), encerrando a locação.
     Locacao.status_locacao = 2;
     Locacao.data_fim = new Date();
     const LocacaoSalva = await this.LocacaoRepository.save(Locacao);

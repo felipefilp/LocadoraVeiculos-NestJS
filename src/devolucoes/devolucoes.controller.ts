@@ -4,7 +4,7 @@ import { DevolucaoRetornoDto } from './dto/devolucao-create-response.dto';
 import { DevolucaoCriarDto } from './dto/devolucao-create.dto';
 import { DevolucaoAtualizarDto } from './dto/devolucao-atualizar.dto';
 
-@Controller('devolucoes')
+@Controller('devolucao')
 export class DevolucoesController {
   constructor(private DevolucoesService: DevolucoesService) {}
 
@@ -13,7 +13,7 @@ export class DevolucoesController {
     return this.DevolucoesService.BuscarDevolucaoById(id);
   }
 
-  @Get('BuscarDevolucoesPorRemessa/:id')
+  @Get('BuscarDevolucaoPorRemessa/:id')
   async getDevolucaoPorRemessa(
     @Param('id') id: number,
   ): Promise<DevolucaoRetornoDto> {

@@ -51,4 +51,11 @@ export class VeiculosService {
     VeiculoLocalizado.updated_at = new Date();
     return this.VeiculoRepository.save(VeiculoLocalizado);
   }
+
+  async getVeiculoById(id: number): Promise<VeiculoRetornoDto> {
+    const VeiculoLocalizado = await this.VeiculoRepository.findOneBy({ id });
+    return plainToInstance(VeiculoRetornoDto, VeiculoLocalizado, {
+      excludeExtraneousValues: true,
+    });
+  }
 }

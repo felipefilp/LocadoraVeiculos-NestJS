@@ -19,9 +19,6 @@ export class RemessaCriarDto {
   @ManyToOne(() => Locacao, (locacao) => locacao.id)
   id_locacao: Relation<Locacao>;
 
-  @IsNumber({}, { message: IsNumberMessage('status_locacao') })
-  status_locacao: number;
-
   @IsNumber({}, { message: IsNumberMessage('valor_remessa') })
   valor_remessa: number;
 }
