@@ -1,98 +1,162 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API - Locadora de Veículos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API completa para gerenciamento de uma locadora de veículos, desenvolvida com NestJS. O sistema permite o controle de clientes, veículos, vendedores, locações, remessas e devoluções de forma integrada e eficiente.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Tecnologias
 
-## Description
+- **NestJS** - Framework Node.js progressivo
+- **TypeORM** - ORM para TypeScript e JavaScript
+- **PostgreSQL** - Banco de dados relacional
+- **Swagger** - Documentação automática da API
+- **Class Validator** - Validação de dados
+- **Docker** - Containerização do banco de dados
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Módulos
 
-## Project setup
+A API está organizada nos seguintes módulos principais:
 
-```bash
-$ npm install
-```
+- **Clientes** - Gerenciamento de clientes da locadora
+- **Veículos** - Controle do catálogo de veículos
+- **Vendedores** - Cadastro e controle de vendedores
+- **Locações** - Processamento de locações de veículos
+- **Remessas** - Controle de entregas de veículos
+- **Devoluções** - Gestão de devoluções de veículos
 
-## Compile and run the project
+## 🛠️ Instalação e Configuração
 
-```bash
-# development
-$ npm run start
+### Pré-requisitos
 
-# watch mode
-$ npm run start:dev
+- Node.js (versão 14 ou superior)
+- Docker e Docker Compose
+- PostgreSQL (via Docker)
 
-# production mode
-$ npm run start:prod
-```
+### Passo a passo
 
-## Run tests
+1. Clone o repositório:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/felipefilp/LocadoraVeiculos-NestJS
+cd api-locadora-veiculos
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. Instale as dependências:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+3. Configure as variáveis de ambiente:
 
-## Resources
+```bash
+cp env/.development.env.example env/.development.env
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Edite o arquivo `env/.development.env` com suas configurações de banco de dados.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+4. Inicie o banco de dados PostgreSQL com Docker:
 
-## Support
+```bash
+docker-compose up -d
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+5. Execute a aplicação:
 
-## Stay in touch
+**Modo desenvolvimento:**
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm run start:dev
+```
 
-## License
+**Modo produção:**
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+npm run start
+```
+
+6. Acesse a documentação Swagger:
+
+```
+http://localhost:3000/api
+```
+
+## 📚 Documentação das Rotas
+
+### Clientes
+
+| Método | Rota                               | Descrição                 |
+| ------ | ---------------------------------- | ------------------------- |
+| GET    | `/clientes/BuscarTodosClientes`    | Lista todos os clientes   |
+| GET    | `/clientes/BuscarCliente/{cpf}`    | Busca cliente por CPF     |
+| POST   | `/clientes/CriarCliente`           | Cria novo cliente         |
+| PATCH  | `/clientes/AtualizarCliente/{cpf}` | Atualiza dados do cliente |
+
+### Veículos
+
+| Método | Rota                                | Descrição                 |
+| ------ | ----------------------------------- | ------------------------- |
+| GET    | `/veiculo/BuscarVeiculo/{placa}`    | Busca veículo pela placa  |
+| GET    | `/veiculo/BuscarTodosVeiculos`      | Lista todos os veículos   |
+| POST   | `/veiculo/CriarVeiculo`             | Cadastra novo veículo     |
+| PATCH  | `/veiculo/AtualizarVeiculo/{placa}` | Atualiza dados do veículo |
+
+### Vendedores
+
+| Método | Rota                                | Descrição                  |
+| ------ | ----------------------------------- | -------------------------- |
+| GET    | `/vendedor/BuscarVendedor/{cpf}`    | Busca vendedor por CPF     |
+| GET    | `/vendedor/BuscarTodosVendedores`   | Lista todos os vendedores  |
+| POST   | `/vendedor/CriarVendedor`           | Cadastra novo vendedor     |
+| PATCH  | `/vendedor/AtualizarVendedor/{cpf}` | Atualiza dados do vendedor |
+
+### Locações
+
+| Método | Rota                             | Descrição                   |
+| ------ | -------------------------------- | --------------------------- |
+| GET    | `/locacao/BuscarLocacao/{id}`    | Busca locação por ID        |
+| GET    | `/locacao/BuscarTodasLocacoes`   | Lista todas as locações     |
+| GET    | `/locacao/BuscarLocacoesPorData` | Filtra locações por período |
+| POST   | `/locacao/RealizarLocacao`       | Cria nova locação           |
+| PATCH  | `/locacao/AtualizarLocacao/{id}` | Atualiza dados da locação   |
+| PATCH  | `/locacao/ConcluirLocacao/{id}`  | Finaliza uma locação        |
+
+### Remessas
+
+| Método | Rota                                       | Descrição                     |
+| ------ | ------------------------------------------ | ----------------------------- |
+| GET    | `/remessa/BuscarRemessa/{id}`              | Busca remessa por ID          |
+| GET    | `/remessa/BuscarRemessasPorLocacaoId/{id}` | Lista remessas de uma locação |
+| POST   | `/remessa/CriarRemessa`                    | Cria nova remessa             |
+| PATCH  | `/remessa/AtualizarRemessa/{id}`           | Atualiza dados da remessa     |
+| PATCH  | `/remessa/ConcluirRemessa/{id}`            | Finaliza uma remessa          |
+
+### Devoluções
+
+| Método | Rota                                        | Descrição                         |
+| ------ | ------------------------------------------- | --------------------------------- |
+| GET    | `/devolucao/BuscarDevolucao/{id}`           | Busca devolução por ID            |
+| GET    | `/devolucao/BuscarDevolucaoPorRemessa/{id}` | Busca devolução por ID da remessa |
+| POST   | `/devolucao/CriarDevolucao`                 | Registra nova devolução           |
+| PATCH  | `/devolucao/AtualizarDevolucao/{id}`        | Atualiza dados da devolução       |
+| PATCH  | `/devolucao/ConcluirDevolucao/{id}`         | Finaliza uma devolução            |
+
+## 📊 Planejamento do Projeto
+
+O planejamento e a arquitetura do sistema foram desenvolvidos no Miro. Você pode visualizar o board completo através do link:
+
+[🔗 Acessar Planejamento no Miro](https://miro.com/welcomeonboard/OEpPdzZyTGdTTkNVbXRiN283aGRDMFJCbit3dDkyaExDa2R2NEdSYWJiTjEzUnlQb1FkZHBIZzF1Vk5FZDNlVzVseFhKSkMyTlkxdmtpUG9rUm5UeFBySERNWCtLajdPeGpvUzJ4dk9yU1p3UkJad3dWU2hHbjA3aVRHVVlZb1JQdGo1ZEV3bUdPQWRZUHQzSGl6V2NBPT0hdjE=?share_link_id=271781048964)
+
+## 🗃️ Banco de Dados
+
+O projeto utiliza PostgreSQL como banco de dados. A estrutura é gerenciada pelo TypeORM, que cuida das migrações e relacionamentos entre as entidades.
+
+### Configuração do Docker
+
+O banco de dados é executado em um container Docker. Certifique-se de ter o Docker instalado e em execução antes de iniciar a aplicação.
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT.
+
+## 👨‍💻 Autor
+
+Desenvolvido por Felipe Martins e faz parte do meu portifólio de projetos.
