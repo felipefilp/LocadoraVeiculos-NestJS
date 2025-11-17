@@ -14,7 +14,7 @@ import { LocacaoAtualizarDto } from './dto/locacao-atualizar.dto';
 import { BuscarLocacoesPorDataDto } from './dto/locacao-buscardata-dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Locação')
+@ApiTags('Locacao')
 @Controller('locacao')
 export class LocacoesController {
   constructor(private readonly locacaoService: LocacoesService) {}
@@ -79,7 +79,7 @@ export class LocacoesController {
     return this.locacaoService.concluirLocacao(id);
   }
 
-  @Post('/RealizarLocacao')
+  @Post('/CriarLocacao')
   @ApiOperation({ summary: 'Criar locação.' })
   @ApiResponse({
     status: 200,
