@@ -43,7 +43,7 @@ A API está organizada nos seguintes módulos principais:
 
 ```bash
 git clone https://github.com/felipefilp/LocadoraVeiculos-NestJS
-cd api-locadora-veiculos
+cd locacao-de-veiculos-api
 ```
 
 2. Instale as dependências:
@@ -55,10 +55,10 @@ npm install
 3. Configure as variáveis de ambiente:
 
 ```bash
-cp env/.development.env.example env/.development.env
+cp env/.development.env
 ```
 
-Edite o arquivo `env/.development.env` com suas configurações de banco de dados.
+Edite o arquivo `env/.development.env` com suas configurações de banco de dados, seguindo o padrão do arquivo `env/.development.env.example`.
 
 4. Inicie o banco de dados PostgreSQL com Docker:
 
@@ -154,7 +154,7 @@ O planejamento e a arquitetura do sistema foram desenvolvidos no Miro. Você pod
 
 ## 🗃️ Banco de Dados
 
-O projeto utiliza PostgreSQL como banco de dados. A estrutura é gerenciada pelo TypeORM, que cuida das migrações e relacionamentos entre as entidades.
+O projeto utiliza PostgreSQL como banco de dados. A estrutura é gerenciada pelo TypeORM, que cuida dos relacionamentos entre as entidades.
 
 ### Configuração do Docker
 
@@ -166,4 +166,4 @@ Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Autor
 
-Desenvolvido por Felipe Martins e faz parte do meu portifólio de projetos.
+Desenvolvido por mim e faz parte do meu portifólio pessoal de projetos.
