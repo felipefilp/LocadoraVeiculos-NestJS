@@ -162,8 +162,5 @@ O banco de dados é executado em um container Docker. Certifique-se de ter o Doc
 
 ## 📝 Licença
 
-Este projeto está sob a licença MIT.
-
-## 👨‍💻 Autor
-
-Desenvolvido por mim e faz parte do meu portifólio pessoal de projetos.
+Este projeto é de uso pessoal e demonstração.  
+Você pode utilizá-lo como base para aprendizado e estudo.
